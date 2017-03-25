@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Hero } from './hero';
 import { HeroDetailComponent } from './hero-detail.component';
-import { HeroService } from './hero.service';
+import { HeroService } from './hero-aws.service';
 import { OnInit } from '@angular/core';
 
 @Component({
@@ -21,7 +21,18 @@ export class HeroesComponent implements OnInit {
     private heroService: HeroService) { }
 
   getHeroes(): void {
-    this.heroService.getHeroes().then(heroes => this.heroes = heroes);
+    this.heroService.getHeroes().then(result => {
+        //SUCCESS
+        console.log(result); 
+        this.heroes = result; 
+        console.log("I am inside then SUCCESS")
+        //console.log(this.title);
+        //console.log(this.heroes);
+
+    }, (error) => {
+        //FAILURE
+        console.log(error);
+    })
   }
 
   ngOnInit(): void {
