@@ -25,8 +25,8 @@ export class HeroService {
     return Promise.reject(error.message || error);
   }
 
-  getHero(id: number): Promise<Hero> {
-    const url = `${this.heroesUrl}/?id=${id}`;
+  getHero(uuid: string): Promise<Hero> {
+    const url = `${this.heroesUrl}/?uuid=${uuid}`;
     return this.http.get(url)
       .toPromise()
       .then(response => JSON.parse(response.json().body).Items[0] as Hero)
@@ -36,7 +36,7 @@ export class HeroService {
   private headers = new Headers({'Content-Type': 'application/json'});
 
   update(hero: Hero): Promise<Hero> {
-    const url = `${this.heroesUrl}/${hero.id}`;
+    const url = `${this.heroesUrl}/${hero.uuid}`;
     return this.http
       .put(url, JSON.stringify(hero), {headers: this.headers})
       .toPromise()
@@ -52,8 +52,8 @@ export class HeroService {
       .catch(this.handleError);
   }
 
-  delete(id: number): Promise<void> {
-    const url = `${this.heroesUrl}/${id}`;
+  delete(uuid: string): Promise<void> {
+    const url = `${this.heroesUrl}/${uuid}`;
     return this.http.delete(url, {headers: this.headers})
       .toPromise()
       .then(() => null)
